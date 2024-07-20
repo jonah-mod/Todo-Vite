@@ -1,14 +1,17 @@
 import TodoList from "./TodoList"
 import { useState } from "react"
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Todos() {
 
     const [todos, setTodos ] = useState([
         {
+            id: uuidv4(),
             title: 'Leaning js',
             status: true
         },
         {
+            id: uuidv4(),
             title: 'Learning react',
             status: false
         }
@@ -27,12 +30,19 @@ export default function Todos() {
             setTodos([
                 ...todos,
                 {
+                    id: uuidv4(),
                     title : newTodoTitle,
                     status : false
                 }
             ])
-            setNewTodoTitle("");
+            setNewTodoTitle("");    
         }
+    }
+
+    const deleteTodoHandler = (todo) => {
+        let newTodos = todo.filter((todoItem) => {
+            return todo.id != todoItem.id
+        })
     }
 
     return(
@@ -49,7 +59,7 @@ export default function Todos() {
                     value={newTodoTitle}
                     className="w-full px-2 py-3 border rounded outline-none border-grey-600" />
                 </div>
-                <TodoList todos={todos}/>
+                <TodoList todos={todos} deleteTodo={deleteTodoHandler}/>
             </div>
         </div>
     </div>
