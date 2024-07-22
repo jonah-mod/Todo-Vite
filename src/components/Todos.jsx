@@ -40,9 +40,33 @@ export default function Todos() {
     }
 
     const deleteTodoHandler = (todo) => {
-        let newTodos = todo.filter((todoItem) => {
+        let newTodos = todos.filter((todoItem) => {
             return todo.id != todoItem.id
         })
+
+        setTodos(newTodos)
+    }
+
+    const toggleTodoStatusHandler = (todo) => {
+        let newTodos = todos.map( (todoItem) =>{
+            if (todo.id == todoItem.id) {
+                todoItem.status = ! todoItem.status
+            }
+            return todoItem;
+        } )
+        setTodos(newTodos);
+    }
+
+    const editTodoTitleHandler = (todo, newTitleValue) => {
+        let newTodos = todos.map( (todoItem) =>{
+            if (todo.id == todoItem.id) {
+                todoItem.title = newTitleValue
+            }
+           
+            return todoItem;
+        } )
+        
+        setTodos(newTodos);
     }
 
     return(
@@ -59,7 +83,7 @@ export default function Todos() {
                     value={newTodoTitle}
                     className="w-full px-2 py-3 border rounded outline-none border-grey-600" />
                 </div>
-                <TodoList todos={todos} deleteTodo={deleteTodoHandler}/>
+                <TodoList todos={todos} deleteTodo={deleteTodoHandler} toggleTodoStatus={toggleTodoStatusHandler} editTodoTitle={editTodoTitleHandler}/>
             </div>
         </div>
     </div>
